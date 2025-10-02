@@ -2,7 +2,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MadeWithDyad } from '@/components/made-with-dyad';
+//import { MadeWithDyad } from '@/components/made-with-dyad';
 
 const Login = () => {
   return (
@@ -32,7 +32,7 @@ const Login = () => {
           />
         </CardContent>
       </Card>
-      <MadeWithDyad />
+      {/*<MadeWithDyad />*/}
     </div>
   );
 };
