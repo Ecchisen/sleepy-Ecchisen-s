@@ -6,8 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import CreateTeam from "./pages/CreateTeam"; // Import the new CreateTeam component
 import { SessionContextProvider } from "./context/SessionContext";
-import ProtectedRoute from "./components/ProtectedRoute"; // We will create this next
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create-team" element={<CreateTeam />} /> {/* New CreateTeam route */}
               <Route path="/" element={<Index />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             </Route>
