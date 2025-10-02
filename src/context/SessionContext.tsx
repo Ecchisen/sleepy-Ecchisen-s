@@ -26,7 +26,7 @@ export const SessionContextProvider: React.FC<{ children: React.ReactNode }> = (
       if (_event === 'SIGNED_OUT') {
         navigate('/login');
       } else if (session && _event === 'SIGNED_IN') {
-        navigate('/');
+        navigate('/dashboard'); // Changed this line to redirect to /dashboard
       }
     });
 
