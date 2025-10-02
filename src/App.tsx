@@ -7,7 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import CreateTeam from "./pages/CreateTeam"; // Import the new CreateTeam component
+import CreateTeam from "./pages/CreateTeam";
+import TeamDetails from "./pages/TeamDetails"; // Import the new TeamDetails component
 import { SessionContextProvider } from "./context/SessionContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -25,7 +26,8 @@ const App = () => (
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/create-team" element={<CreateTeam />} /> {/* New CreateTeam route */}
+              <Route path="/create-team" element={<CreateTeam />} />
+              <Route path="/teams/:teamId" element={<TeamDetails />} /> {/* New TeamDetails route */}
               <Route path="/" element={<Index />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             </Route>

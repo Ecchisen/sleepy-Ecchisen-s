@@ -30,7 +30,8 @@ const CreateTeam: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    const { data, error } = await supabase
+    
+    const { data: teamData, error: teamError } = await supabase
       .from('teams')
       .insert({
         team_name: teamName,
@@ -40,13 +41,49 @@ const CreateTeam: React.FC = () => {
       .select()
       .single();
 
-    if (error) {
-      console.error('Error creating team:', error);
+    if (teamError) {
+      console.error('Error creating team:', teamError);
       showError('Failed to create team. Please try again.');
-    } else {
-      showSuccess('Team created successfully!');
-      navigate('/dashboard'); // Redirect to dashboard after creating team
+      setIsSubmitting(false);
+      return;
     }
+
+    // Create an associated project
+    const { data: projectData, error: projectError } = await supabase
+      .from('projects')
+      .insert({
+        team_id: teamData.id,
+        abstract: projectTitle, // Using projectTitle as initial abstract
+      })
+      .select()
+      .single();
+
+    if (projectError) {
+      console.error('Error creating project:', projectError);
+      showError('Failed to create project. Please try again.');
+      // Optionally, you might want to delete the team if project creation fails
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Add the creator as an admin member of the team
+    const { error: memberError } = await supabase
+      .from('team_members')
+      .insert({
+        team_id: teamData.id,
+        user_id: user.id,
+        role: 'admin',
+      });
+
+    if (memberError) {
+      console.error('Error adding team creator as member:', memberError);
+      showError('Failed to add you as a team member. Please try again.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    showSuccess('Team and Project created successfully!');
+    navigate(`/teams/${teamData.id}`); // Redirect to the new TeamDetails page
     setIsSubmitting(false);
   };
 
